@@ -1,0 +1,313 @@
+
+<div class="alunos-page">
+
+  <div class="page-heading">
+    <div>
+      <span class="page-tag">GESTÃO ACADÊMICA</span>
+      <h1>Alunos</h1>
+      <p>Gerencie os alunos cadastrados no sistema.</p>
+    </div>
+
+    <div class="heading-icon">
+      <span>♙</span>
+    </div>
+  </div>
+
+  <!-- MENSAGENS -->
+  @if (mensagemErro) {
+    <div class="alert alert-error">
+      {{ mensagemErro }}
+    </div>
+  }
+
+  @if (mensagemSucesso) {
+    <div class="alert alert-success">
+      {{ mensagemSucesso }}
+    </div>
+  }
+
+  <!-- FORMULÁRIO -->
+  <section class="form-card">
+
+    <div class="section-heading">
+      <div>
+        <h2>
+          {{ alunoEmEdicao !== null ? 'Editar aluno' : 'Cadastrar aluno' }}
+        </h2>
+
+        <p>
+          Informe os dados do aluno nos campos abaixo.
+        </p>
+      </div>
+
+      <span class="section-icon">＋</span>
+    </div>
+
+    <form #formAluno="ngForm" (ngSubmit)="salvar()">
+
+      <div class="form-grid">
+
+        <div class="form-group full-width">
+          <label for="nome">Nome completo *</label>
+
+          <input
+            id="nome"
+            type="text"
+            name="nome"
+            [(ngModel)]="alunoForm.nome"
+            placeholder="Digite o nome completo"
+            maxlength="100"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cpf">CPF *</label>
+
+          <input
+            id="cpf"
+            type="text"
+            name="cpf"
+            [(ngModel)]="alunoForm.cpf"
+            placeholder="000.000.000-00"
+            maxlength="14"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="matricula">Matrícula *</label>
+
+          <input
+            id="matricula"
+            type="text"
+            name="matricula"
+            [(ngModel)]="alunoForm.matricula"
+            placeholder="Ex.: 2026001"
+            maxlength="20"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail *</label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="alunoForm.email"
+            placeholder="aluno@email.com"
+            maxlength="100"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="dataNascimento">Data de nascimento *</label>
+
+          <input
+            id="dataNascimento"
+            type="date"
+            name="dataNascimento"
+            [(ngModel)]="alunoForm.dataNascimento"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="ativo">Situação</label>
+
+          <select
+            id="ativo"
+            name="ativo"
+            [(ngModel)]="alunoForm.ativo"
+          >
+            <option [ngValue]="true">Ativo</option>
+            <option [ngValue]="false">Inativo</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        @if (alunoEmEdicao !== null) {
+          <button
+            type="button"
+            class="btn-cancel"
+            (click)="cancelarEdicao()"
+          >
+            Cancelar edição
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="btn-cancel"
+            (click)="limparFormulario()"
+          >
+            Limpar
+          </button>
+        }
+
+        <button
+          type="submit"
+          class="btn-save"
+          [disabled]="salvando || !formAluno.valid"
+        >
+          {{ salvando
+            ? 'Salvando...'
+            : alunoEmEdicao !== null
+              ? 'Salvar alterações'
+              : 'Cadastrar aluno'
+          }}
+        </button>
+
+      </div>
+
+    </form>
+  </section>
+
+  <!-- LISTAGEM -->
+  <section class="list-card">
+
+    <div class="list-heading">
+      <div>
+        <h2>Alunos cadastrados</h2>
+        <p>Consulte e gerencie os registros acadêmicos.</p>
+      </div>
+
+      <div class="total-alunos">
+        <strong>{{ alunos.length }}</strong>
+        <span>Registros</span>
+      </div>
+    </div>
+
+    <!-- PESQUISA -->
+    <div class="search-box">
+      <span>⌕</span>
+
+      <input
+        type="search"
+        name="termoBusca"
+        [(ngModel)]="termoBusca"
+        placeholder="Pesquisar por nome, CPF, e-mail ou matrícula..."
+      >
+    </div>
+
+    @if (carregando) {
+
+      <div class="empty-state">
+        <div class="loading-circle"></div>
+        <p>Carregando alunos...</p>
+      </div>
+
+    } @else if (alunosFiltrados.length === 0) {
+
+      <div class="empty-state">
+        <span class="empty-icon">♙</span>
+
+        <h3>Nenhum aluno encontrado</h3>
+
+        <p>
+          {{ alunos.length === 0
+            ? 'Cadastre o primeiro aluno para começar.'
+            : 'Não encontramos alunos com essa pesquisa.'
+          }}
+        </p>
+      </div>
+
+    } @else {
+
+      <div class="table-container">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>CPF</th>
+              <th>Matrícula</th>
+              <th>Data de nascimento</th>
+              <th>Situação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @for (aluno of alunosFiltrados; track aluno.id) {
+
+              <tr>
+                <td>
+                  <div class="student-info">
+                    <div class="student-avatar">
+                      {{ aluno.nome.charAt(0).toUpperCase() }}
+                    </div>
+
+                    <div>
+                      <strong>{{ aluno.nome }}</strong>
+                      <small>{{ aluno.email }}</small>
+                    </div>
+                  </div>
+                </td>
+
+                <td>{{ aluno.cpf }}</td>
+
+                <td>
+                  <span class="matricula">
+                    {{ aluno.matricula }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ formatarData(aluno.dataNascimento) }}
+                </td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.status-active]="aluno.ativo"
+                    [class.status-inactive]="!aluno.ativo"
+                  >
+                    {{ aluno.ativo ? 'Ativo' : 'Inativo' }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="action-buttons">
+
+                    <button
+                      type="button"
+                      class="btn-edit"
+                      title="Editar aluno"
+                      (click)="editarAluno(aluno)"
+                    >
+                      Editar
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn-delete"
+                      title="Excluir aluno"
+                      [disabled]="excluindoId !== null"
+                      (click)="excluirAluno(aluno)"
+                    >
+                      {{ excluindoId === aluno.id ? 'Excluindo...' : 'Excluir' }}
+                    </button>
+
+                  </div>
+                </td>
+              </tr>
+
+            }
+
+          </tbody>
+        </table>
+
+      </div>
+
+    }
+
+  </section>
+
+</div>

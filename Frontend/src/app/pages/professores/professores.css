@@ -1,0 +1,383 @@
+
+:host {
+  display: block;
+  min-height: 100%;
+  color: #153F40;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.pagina-professores {
+  padding: 30px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.titulo-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.subtitulo {
+  color: #26736D;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.titulo-pagina h1 {
+  margin: 7px 0;
+  font-size: 30px;
+  color: #153F40;
+}
+
+.titulo-pagina p,
+.card-titulo p,
+.cabecalho-tabela p {
+  margin: 0;
+  color: #718583;
+  font-size: 14px;
+}
+
+.contador {
+  background: #ffffff;
+  border: 1px solid #dcebe6;
+  border-radius: 14px;
+  padding: 15px 22px;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0 5px 18px rgba(21, 63, 64, 0.05);
+}
+
+.contador span {
+  font-size: 12px;
+  color: #718583;
+}
+
+.contador strong {
+  font-size: 25px;
+  color: #26736D;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e0ece8;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 22px rgba(21, 63, 64, 0.05);
+}
+
+.card-titulo,
+.cabecalho-tabela {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 23px;
+}
+
+.card h2 {
+  color: #153F40;
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-nome {
+  grid-column: span 2;
+}
+
+.campo label {
+  color: #315957;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #d6e5df;
+  border-radius: 9px;
+  padding: 0 13px;
+  color: #153F40;
+  background: #fbfdfc;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: #26736D;
+  box-shadow: 0 0 0 3px rgba(38, 115, 109, 0.10);
+  background: #ffffff;
+}
+
+.campo input::placeholder {
+  color: #a1b2ae;
+}
+
+.acoes-formulario {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.2s ease;
+}
+
+.btn-principal {
+  background: #26736D;
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 23px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn-principal:hover:not(:disabled) {
+  background: #153F40;
+  transform: translateY(-1px);
+}
+
+.btn-principal:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-secundario {
+  background: #edf4f1;
+  color: #315957;
+  border: 1px solid #d6e5df;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn-secundario:hover {
+  background: #dcebe6;
+}
+
+.cabecalho-tabela {
+  flex-wrap: wrap;
+}
+
+.busca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 280px;
+  max-width: 100%;
+  height: 42px;
+  border: 1px solid #d6e5df;
+  border-radius: 9px;
+  padding: 0 12px;
+  background: #fbfdfc;
+}
+
+.busca span {
+  font-size: 22px;
+  color: #71928c;
+}
+
+.busca input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #153F40;
+  font-size: 13px;
+}
+
+.tabela-responsiva {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+thead {
+  background: #f0f7f4;
+}
+
+th {
+  color: #315957;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 15px 13px;
+  white-space: nowrap;
+}
+
+td {
+  padding: 16px 13px;
+  border-bottom: 1px solid #edf2ef;
+  color: #526c68;
+  font-size: 13px;
+}
+
+td strong {
+  color: #153F40;
+}
+
+tbody tr {
+  transition: 0.2s;
+}
+
+tbody tr:hover {
+  background: #f8fbf9;
+}
+
+.status {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.status.ativo {
+  color: #26736D;
+  background: #e2f4ed;
+}
+
+.status.inativo {
+  color: #8b6a36;
+  background: #fff2dc;
+}
+
+.acoes-tabela {
+  display: flex;
+  gap: 7px;
+}
+
+.btn-editar,
+.btn-excluir {
+  border: none;
+  border-radius: 7px;
+  padding: 8px 11px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.btn-editar {
+  color: #26736D;
+  background: #e6f3ef;
+}
+
+.btn-editar:hover {
+  background: #cfe8df;
+}
+
+.btn-excluir {
+  color: #b34c4c;
+  background: #fff0ef;
+}
+
+.btn-excluir:hover {
+  background: #fbdcda;
+}
+
+.estado-vazio {
+  text-align: center;
+  padding: 45px 15px;
+  color: #718583;
+}
+
+.icone-vazio {
+  font-size: 35px;
+  color: #75B8A7;
+}
+
+.estado-vazio h3 {
+  color: #315957;
+  margin: 12px 0 7px;
+}
+
+.estado-vazio p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.alerta {
+  padding: 13px 17px;
+  border-radius: 9px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.alerta.erro {
+  color: #a33c3c;
+  background: #fff0ef;
+  border: 1px solid #f3d0ce;
+}
+
+.alerta.sucesso {
+  color: #26736D;
+  background: #e7f5ee;
+  border: 1px solid #cce8da;
+}
+
+@media (max-width: 768px) {
+  .pagina-professores {
+    padding: 18px;
+  }
+
+  .titulo-pagina {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campo-nome {
+    grid-column: span 1;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .cabecalho-tabela {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .busca {
+    width: 100%;
+  }
+}

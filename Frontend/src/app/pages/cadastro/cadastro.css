@@ -1,0 +1,280 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.cadastro-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #153F40, #26736D);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cadastro-decoration {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.12);
+  pointer-events: none;
+}
+
+.decoration-one {
+  width: 480px;
+  height: 480px;
+  top: -220px;
+  left: -160px;
+}
+
+.decoration-two {
+  width: 600px;
+  height: 600px;
+  bottom: -350px;
+  right: -200px;
+}
+
+.cadastro-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  padding: 35px 40px 26px;
+  border-radius: 18px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.2);
+}
+
+.cadastro-brand {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.brand-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: #26736D;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.cadastro-brand h1 {
+  color: #153F40;
+  font-size: 21px;
+  margin: 0;
+}
+
+.cadastro-brand p {
+  color: #75B8A7;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin: 7px 0 0;
+}
+
+.cadastro-heading {
+  margin-bottom: 20px;
+}
+
+.cadastro-heading h2 {
+  color: #153F40;
+  font-size: 22px;
+  margin: 0 0 7px;
+}
+
+.cadastro-heading p {
+  color: #78918C;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* CAMPOS */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  color: #315B56;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #D8E8E2;
+  border-radius: 9px;
+  padding: 0 14px;
+  font-size: 13px;
+  color: #153F40;
+  outline: none;
+  background: #FAFCFB;
+}
+
+.form-group input:focus {
+  border-color: #26736D;
+  box-shadow: 0 0 0 3px rgba(38,115,109,.12);
+}
+
+.form-group input::placeholder {
+  color: #A3B6B1;
+}
+
+/* SENHAS E ÍCONES */
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 48px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: #26736D;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.toggle-password:hover {
+  color: #153F40;
+}
+
+/* TERMOS E LGPD */
+.terms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 5px 0 18px;
+  color: #58736D;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.terms-check input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #26736D;
+  cursor: pointer;
+}
+
+.terms-check label {
+  cursor: pointer;
+}
+
+/* MENSAGENS */
+.error-message,
+.success-message {
+  padding: 11px 13px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  background: #FFF0EF;
+  border: 1px solid #F2CDCA;
+  color: #A33D36;
+}
+
+.success-message {
+  background: #EAF4F1;
+  border: 1px solid #B8DCCF;
+  color: #26736D;
+}
+
+/* BOTÃO */
+.cadastro-button {
+  width: 100%;
+  height: 47px;
+  border: none;
+  border-radius: 9px;
+  background: #26736D;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.cadastro-button:hover:not(:disabled) {
+  background: #153F40;
+  transform: translateY(-1px);
+}
+
+.cadastro-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* LINK LOGIN */
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #78918C;
+  font-size: 13px;
+}
+
+.login-link a {
+  color: #26736D;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* RODAPÉ */
+.cadastro-footer {
+  border-top: 1px solid #E8F0ED;
+  margin-top: 22px;
+  padding-top: 16px;
+  text-align: center;
+  color: #9BAFA9;
+  font-size: 11px;
+}
+
+/* RESPONSIVIDADE */
+@media(max-width: 480px) {
+  .cadastro-card {
+    padding: 30px 23px 24px;
+  }
+}

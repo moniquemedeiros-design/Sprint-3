@@ -1,0 +1,227 @@
+
+<div class="pagina-turmas">
+
+  <div class="titulo-pagina">
+    <div>
+      <span class="subtitulo">GESTÃO ACADÊMICA</span>
+      <h1>Turmas</h1>
+      <p>Cadastre e organize as turmas do sistema acadêmico.</p>
+    </div>
+
+    <div class="contador">
+      <span>Total de turmas</span>
+      <strong>{{ turmas.length }}</strong>
+    </div>
+  </div>
+
+  @if (mensagemErro) {
+    <div class="alerta erro">
+      {{ mensagemErro }}
+    </div>
+  }
+
+  @if (mensagemSucesso) {
+    <div class="alerta sucesso">
+      {{ mensagemSucesso }}
+    </div>
+  }
+
+  <section class="card-formulario">
+
+    <div class="cabecalho-card">
+      <div>
+        <h2>
+          {{ turmaEmEdicao !== null ? 'Editar turma' : 'Cadastrar turma' }}
+        </h2>
+        <p>Preencha os dados para registrar uma turma.</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="salvar()">
+
+      <div class="campo">
+        <label for="nome">Nome da turma *</label>
+        <input
+          id="nome"
+          type="text"
+          name="nome"
+          [(ngModel)]="turmaForm.nome"
+          maxlength="50"
+          placeholder="Ex.: ADS - Turma A"
+          required
+        >
+      </div>
+
+      <div class="linha-campos">
+
+        <div class="campo">
+          <label for="ano">Ano letivo *</label>
+          <input
+            id="ano"
+            type="number"
+            name="ano"
+            [(ngModel)]="turmaForm.ano"
+            min="2000"
+            max="2100"
+            required
+          >
+        </div>
+
+        <div class="campo">
+          <label for="semestre">Semestre *</label>
+          <select
+            id="semestre"
+            name="semestre"
+            [(ngModel)]="turmaForm.semestre"
+          >
+            <option [ngValue]="1">1º semestre</option>
+            <option [ngValue]="2">2º semestre</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="linha-campos">
+
+        <div class="campo">
+          <label for="professorId">ID do professor *</label>
+          <input
+            id="professorId"
+            type="number"
+            name="professorId"
+            [(ngModel)]="turmaForm.professorId"
+            min="1"
+            placeholder="Informe o ID do professor"
+            required
+          >
+          <small>Posteriormente será possível selecionar pelo nome.</small>
+        </div>
+
+        <div class="campo">
+          <label for="disciplinaId">ID da disciplina *</label>
+          <input
+            id="disciplinaId"
+            type="number"
+            name="disciplinaId"
+            [(ngModel)]="turmaForm.disciplinaId"
+            min="1"
+            placeholder="Informe o ID da disciplina"
+            required
+          >
+          <small>Posteriormente será possível selecionar pelo nome.</small>
+        </div>
+
+      </div>
+
+      <div class="acoes-formulario">
+
+        <button
+          type="submit"
+          class="botao-principal"
+        >
+          {{ turmaEmEdicao !== null ? 'Salvar alterações' : 'Cadastrar turma' }}
+        </button>
+
+        @if (turmaEmEdicao !== null) {
+          <button
+            type="button"
+            class="botao-secundario"
+            (click)="cancelarEdicao()"
+          >
+            Cancelar
+          </button>
+        }
+
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card-listagem">
+
+    <div class="cabecalho-listagem">
+      <div>
+        <h2>Turmas cadastradas</h2>
+        <p>Consulte, edite ou exclua as turmas.</p>
+      </div>
+
+      <input
+        type="search"
+        class="campo-busca"
+        name="termoBusca"
+        [(ngModel)]="termoBusca"
+        placeholder="Pesquisar turma..."
+      >
+    </div>
+
+    @if (turmasFiltradas.length === 0) {
+
+      <div class="estado-vazio">
+        <span class="icone-vazio">🎓</span>
+        <strong>Nenhuma turma encontrada</strong>
+        <p>Cadastre uma turma ou altere sua pesquisa.</p>
+      </div>
+
+    } @else {
+
+      <div class="tabela-responsiva">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Turma</th>
+              <th>Ano</th>
+              <th>Semestre</th>
+              <th>ID Professor</th>
+              <th>ID Disciplina</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (turma of turmasFiltradas; track turma.id) {
+              <tr>
+
+                <td class="nome-turma">
+                  {{ turma.nome }}
+                </td>
+
+                <td>{{ turma.ano }}</td>
+
+                <td>{{ turma.semestre }}º semestre</td>
+
+                <td>{{ turma.professorId }}</td>
+
+                <td>{{ turma.disciplinaId }}</td>
+
+                <td class="acoes-tabela">
+
+                  <button
+                    type="button"
+                    class="botao-editar"
+                    (click)="editarTurma(turma)"
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="botao-excluir"
+                    (click)="excluirTurma(turma)"
+                  >
+                    Excluir
+                  </button>
+
+                </td>
+
+              </tr>
+            }
+          </tbody>
+        </table>
+
+      </div>
+    }
+
+  </section>
+
+</div>

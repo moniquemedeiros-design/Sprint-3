@@ -1,0 +1,209 @@
+
+<div class="pagina-disciplinas">
+
+  <div class="titulo-pagina">
+    <div>
+      <span class="subtitulo">GESTÃO ACADÊMICA</span>
+      <h1>Disciplinas</h1>
+      <p>Cadastre e gerencie as disciplinas do sistema.</p>
+    </div>
+
+    <div class="contador">
+      <span>Total de disciplinas</span>
+      <strong>{{ disciplinas.length }}</strong>
+    </div>
+  </div>
+
+  @if (mensagemErro) {
+    <div class="alerta erro">
+      {{ mensagemErro }}
+    </div>
+  }
+
+  @if (mensagemSucesso) {
+    <div class="alerta sucesso">
+      {{ mensagemSucesso }}
+    </div>
+  }
+
+  <section class="card-formulario">
+
+    <div class="cabecalho-card">
+      <div>
+        <h2>
+          {{ disciplinaEmEdicao !== null ? 'Editar disciplina' : 'Cadastrar disciplina' }}
+        </h2>
+        <p>Preencha as informações abaixo.</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="salvar()">
+
+      <div class="campo">
+        <label for="nome">Nome da disciplina *</label>
+        <input
+          id="nome"
+          type="text"
+          name="nome"
+          [(ngModel)]="disciplinaForm.nome"
+          maxlength="100"
+          placeholder="Ex.: Desenvolvimento Web"
+          required
+        >
+      </div>
+
+      <div class="campo">
+        <label for="descricao">Descrição</label>
+        <textarea
+          id="descricao"
+          name="descricao"
+          [(ngModel)]="disciplinaForm.descricao"
+          maxlength="300"
+          rows="3"
+          placeholder="Descreva brevemente a disciplina..."
+        ></textarea>
+      </div>
+
+      <div class="linha-campos">
+
+        <div class="campo">
+          <label for="cargaHoraria">Carga horária (horas) *</label>
+          <input
+            id="cargaHoraria"
+            type="number"
+            name="cargaHoraria"
+            [(ngModel)]="disciplinaForm.cargaHoraria"
+            min="1"
+            max="1000"
+            required
+          >
+        </div>
+
+        <div class="campo">
+          <label for="ativa">Situação</label>
+          <select
+            id="ativa"
+            name="ativa"
+            [(ngModel)]="disciplinaForm.ativa"
+          >
+            <option [ngValue]="true">Ativa</option>
+            <option [ngValue]="false">Inativa</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="acoes-formulario">
+        <button
+          type="submit"
+          class="botao-principal"
+          [disabled]="salvando"
+        >
+          {{ salvando ? 'Salvando...' : disciplinaEmEdicao !== null ? 'Salvar alterações' : 'Cadastrar disciplina' }}
+        </button>
+
+        @if (disciplinaEmEdicao !== null) {
+          <button
+            type="button"
+            class="botao-secundario"
+            (click)="cancelarEdicao()"
+          >
+            Cancelar
+          </button>
+        }
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card-listagem">
+
+    <div class="cabecalho-listagem">
+      <div>
+        <h2>Disciplinas cadastradas</h2>
+        <p>Consulte e gerencie os registros.</p>
+      </div>
+
+      <input
+        type="search"
+        class="campo-busca"
+        placeholder="Pesquisar disciplina..."
+        name="termoBusca"
+        [(ngModel)]="termoBusca"
+      >
+    </div>
+
+    @if (carregando) {
+      <div class="estado-vazio">
+        <div class="spinner"></div>
+        <span>Carregando disciplinas...</span>
+      </div>
+    } @else if (disciplinasFiltradas.length === 0) {
+      <div class="estado-vazio">
+        <span class="icone-vazio">📚</span>
+        <strong>Nenhuma disciplina encontrada</strong>
+        <p>Cadastre uma disciplina ou altere sua pesquisa.</p>
+      </div>
+    } @else {
+
+      <div class="tabela-responsiva">
+        <table>
+          <thead>
+            <tr>
+              <th>Disciplina</th>
+              <th>Descrição</th>
+              <th>Carga horária</th>
+              <th>Situação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (disciplina of disciplinasFiltradas; track disciplina.id) {
+              <tr>
+                <td class="nome-disciplina">
+                  {{ disciplina.nome }}
+                </td>
+
+                <td>{{ disciplina.descricao || '—' }}</td>
+
+                <td>{{ disciplina.cargaHoraria }} horas</td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.ativa]="disciplina.ativa"
+                    [class.inativa]="!disciplina.ativa"
+                  >
+                    {{ disciplina.ativa ? 'Ativa' : 'Inativa' }}
+                  </span>
+                </td>
+
+                <td class="acoes-tabela">
+                  <button
+                    type="button"
+                    class="botao-editar"
+                    (click)="editarDisciplina(disciplina)"
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="botao-excluir"
+                    (click)="excluirDisciplina(disciplina)"
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+  </section>
+
+</div>
+

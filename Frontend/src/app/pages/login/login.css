@@ -1,0 +1,275 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #153F40, #26736D);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-decoration {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.12);
+  pointer-events: none;
+}
+
+.decoration-one {
+  width: 480px;
+  height: 480px;
+  top: -220px;
+  left: -160px;
+}
+
+.decoration-two {
+  width: 600px;
+  height: 600px;
+  bottom: -350px;
+  right: -200px;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  padding: 42px 40px 28px;
+  border-radius: 18px;
+  box-shadow: 0 20px 55px rgba(0,0,0,.2);
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.brand-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: #26736D;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.login-brand h1 {
+  color: #153F40;
+  font-size: 22px;
+  margin: 0;
+}
+
+.login-brand p {
+  color: #75B8A7;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin: 7px 0 0;
+}
+
+.login-heading {
+  margin-bottom: 25px;
+}
+
+.login-heading h2 {
+  color: #153F40;
+  font-size: 23px;
+  margin: 0 0 7px;
+}
+
+.login-heading p {
+  color: #78918C;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* CAMPOS */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: #315B56;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #D8E8E2;
+  border-radius: 9px;
+  padding: 0 14px;
+  font-size: 14px;
+  color: #153F40;
+  outline: none;
+  background: #FAFCFB;
+  transition: border .2s, box-shadow .2s;
+}
+
+.form-group input:focus {
+  border-color: #26736D;
+  box-shadow: 0 0 0 3px rgba(38,115,109,.12);
+}
+
+.form-group input::placeholder {
+  color: #A3B6B1;
+}
+
+/* CAMPO DE SENHA E OLHO */
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 48px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: #26736D;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.toggle-password:hover {
+  color: #153F40;
+}
+
+/* TERMOS E LGPD */
+.terms-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 4px 0 20px;
+  color: #58736D;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.terms-check input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #26736D;
+  cursor: pointer;
+}
+
+.terms-check label {
+  cursor: pointer;
+}
+
+/* ERRO */
+.error-message {
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #FFF0EF;
+  border: 1px solid #F2CDCA;
+  color: #A33D36;
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+
+/* BOTÃO */
+.login-button {
+  width: 100%;
+  height: 49px;
+  border: none;
+  border-radius: 9px;
+  background: #26736D;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #153F40;
+  transform: translateY(-1px);
+}
+
+.login-button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+/* LINK DE CADASTRO */
+.register-link {
+  text-align: center;
+  margin-top: 24px;
+  color: #78918C;
+  font-size: 13px;
+}
+
+.register-link a {
+  color: #26736D;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* RODAPÉ */
+.login-footer {
+  border-top: 1px solid #E8F0ED;
+  margin-top: 27px;
+  padding-top: 18px;
+  text-align: center;
+  color: #9BAFA9;
+  font-size: 11px;
+}
+
+/* RESPONSIVIDADE */
+@media(max-width: 480px) {
+  .login-card {
+    padding: 32px 23px 24px;
+  }
+
+  .login-brand h1 {
+    font-size: 20px;
+  }
+}

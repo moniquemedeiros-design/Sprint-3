@@ -1,0 +1,177 @@
+
+@if (mostrarLayout()) {
+
+  <div class="app-container">
+
+    <!-- CABEÇALHO -->
+    <header class="app-header">
+
+      <button
+        class="hamburger"
+        type="button"
+        aria-label="Abrir ou recolher menu"
+        [attr.aria-expanded]="menuAberto()"
+        (click)="alternarMenu()">
+        ☰
+      </button>
+
+      <div class="header-brand">
+
+        <div class="brand-icon">SGA</div>
+
+        <div class="brand-text">
+          <h1>Sistema de Gestão Acadêmica</h1>
+          <p>GESTÃO EDUCACIONAL</p>
+        </div>
+
+      </div>
+
+      <div class="header-info">
+        <span class="system-status"></span>
+        <span>Sistema Online</span>
+      </div>
+
+    </header>
+
+    <!-- CORPO DO SISTEMA -->
+    <div class="app-body">
+
+      <!-- MENU LATERAL -->
+      <aside
+        class="sidebar"
+        [class.open]="menuAberto()"
+        [class.collapsed]="!menuAberto()">
+
+        <div class="sidebar-title">
+          MENU PRINCIPAL
+        </div>
+
+        <nav class="sidebar-nav">
+
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">⌂</span>
+            <span>Dashboard</span>
+
+          </a>
+
+          <div class="menu-section">
+            ACADÊMICO
+          </div>
+
+          <a
+            routerLink="/alunos"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">♙</span>
+            <span>Alunos</span>
+
+          </a>
+
+          <a
+            routerLink="/professores"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">♧</span>
+            <span>Professores</span>
+
+          </a>
+
+          <a
+            routerLink="/disciplinas"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">▤</span>
+            <span>Disciplinas</span>
+
+          </a>
+
+          <a
+            routerLink="/turmas"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">▦</span>
+            <span>Turmas</span>
+
+          </a>
+
+          <div class="menu-section">
+            GESTÃO ACADÊMICA
+          </div>
+
+          <a
+            routerLink="/matriculas"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">▣</span>
+            <span>Matrículas</span>
+
+          </a>
+
+          <a
+            routerLink="/notas"
+            routerLinkActive="active"
+            (click)="fecharMenu()">
+
+            <span class="menu-icon">▥</span>
+            <span>Notas</span>
+
+          </a>
+
+        </nav>
+
+        <!-- RODAPÉ DO MENU -->
+        <div class="sidebar-footer">
+
+          <span>SGA • Sistema Acadêmico</span>
+
+          <small>Versão 1.0</small>
+
+          <!-- BOTÃO LOGOUT -->
+          <button
+            class="logout-button"
+            type="button"
+            (click)="sair()">
+
+            <span class="menu-icon">⇥</span>
+            <span>Sair do sistema</span>
+
+          </button>
+
+        </div>
+
+      </aside>
+
+      <!-- CONTEÚDO DAS PÁGINAS -->
+      <main class="main-content">
+
+        <router-outlet></router-outlet>
+
+      </main>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="app-footer">
+
+      <span>© 2026 Sistema de Gestão Acadêmica</span>
+
+      <span>Todos os direitos reservados.</span>
+
+    </footer>
+
+  </div>
+
+} @else {
+
+  <router-outlet></router-outlet>
+
+}

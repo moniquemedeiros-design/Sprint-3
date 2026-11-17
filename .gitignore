@@ -1,0 +1,32 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# .NET
+**/bin/
+**/obj/
+
+# Angular
+**/node_modules/
+**/dist/
+**/.angular/
+
+# Configurações locais
+**/appsettings.json
+**/appsettings.Development.json
+
+# Sistema operacional
+Thumbs.db
+.DS_Store
+
+# Configurações locais do VS Code
+**/.vscode/mcp.json
+**/mcp.json
+
+# Arquivos com credenciais e segredos
+**/.env
+**/.env.*
+!**/.env.example
+**/secrets.json
+**/secrets.*.json

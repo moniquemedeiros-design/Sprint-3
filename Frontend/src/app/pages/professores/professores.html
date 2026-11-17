@@ -1,0 +1,222 @@
+
+<div class="pagina-professores">
+
+  <div class="titulo-pagina">
+    <div>
+      <span class="subtitulo">GESTÃO ACADÊMICA</span>
+      <h1>Professores</h1>
+      <p>Gerencie os professores cadastrados no sistema.</p>
+    </div>
+
+    <div class="contador">
+      <span>Total de professores</span>
+      <strong>{{ professores.length }}</strong>
+    </div>
+  </div>
+
+  @if (mensagemErro) {
+    <div class="alerta erro">{{ mensagemErro }}</div>
+  }
+
+  @if (mensagemSucesso) {
+    <div class="alerta sucesso">{{ mensagemSucesso }}</div>
+  }
+
+  <section class="card formulario-card">
+
+    <div class="card-titulo">
+      <div>
+        <h2>
+          {{ professorEmEdicao !== null ? 'Editar professor' : 'Cadastrar professor' }}
+        </h2>
+        <p>Preencha as informações abaixo.</p>
+      </div>
+    </div>
+
+    <form #formProfessor="ngForm" (ngSubmit)="salvar()">
+
+      <div class="form-grid">
+
+        <div class="campo campo-nome">
+          <label for="nome">Nome completo *</label>
+          <input
+            id="nome"
+            type="text"
+            name="nome"
+            [(ngModel)]="professorForm.nome"
+            placeholder="Digite o nome completo"
+            maxlength="100"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="cpf">CPF *</label>
+          <input
+            id="cpf"
+            type="text"
+            name="cpf"
+            [(ngModel)]="professorForm.cpf"
+            placeholder="000.000.000-00"
+            maxlength="14"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="email">E-mail *</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="professorForm.email"
+            placeholder="professor@email.com"
+            maxlength="100"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="especialidade">Especialidade *</label>
+          <input
+            id="especialidade"
+            type="text"
+            name="especialidade"
+            [(ngModel)]="professorForm.especialidade"
+            placeholder="Ex.: Matemática"
+            maxlength="100"
+            required>
+        </div>
+
+        <div class="campo">
+          <label for="ativo">Situação</label>
+          <select
+            id="ativo"
+            name="ativo"
+            [(ngModel)]="professorForm.ativo">
+            <option [ngValue]="true">Ativo</option>
+            <option [ngValue]="false">Inativo</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="acoes-formulario">
+
+        <button
+          type="submit"
+          class="btn-principal"
+          [disabled]="salvando || !formProfessor.valid">
+
+          {{ salvando
+            ? 'Salvando...'
+            : professorEmEdicao !== null
+              ? 'Salvar alterações'
+              : 'Cadastrar professor' }}
+
+        </button>
+
+        @if (professorEmEdicao !== null) {
+          <button
+            type="button"
+            class="btn-secundario"
+            (click)="cancelarEdicao()">
+            Cancelar edição
+          </button>
+        }
+
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card tabela-card">
+
+    <div class="cabecalho-tabela">
+      <div>
+        <h2>Professores cadastrados</h2>
+        <p>Consulte e gerencie os registros.</p>
+      </div>
+
+      <div class="busca">
+        <span>⌕</span>
+        <input
+          type="text"
+          name="termoBusca"
+          [(ngModel)]="termoBusca"
+          placeholder="Buscar professor...">
+      </div>
+    </div>
+
+    @if (carregando) {
+      <div class="estado-vazio">
+        Carregando professores...
+      </div>
+    } @else if (professoresFiltrados.length === 0) {
+      <div class="estado-vazio">
+        <span class="icone-vazio">▤</span>
+        <h3>Nenhum professor encontrado</h3>
+        <p>Cadastre um professor ou altere sua busca.</p>
+      </div>
+    } @else {
+
+      <div class="tabela-responsiva">
+        <table>
+          <thead>
+            <tr>
+              <th>Professor</th>
+              <th>CPF</th>
+              <th>E-mail</th>
+              <th>Especialidade</th>
+              <th>Situação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (professor of professoresFiltrados; track professor.id) {
+              <tr>
+                <td>
+                  <strong>{{ professor.nome }}</strong>
+                </td>
+
+                <td>{{ professor.cpf }}</td>
+
+                <td>{{ professor.email }}</td>
+
+                <td>{{ professor.especialidade }}</td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.ativo]="professor.ativo"
+                    [class.inativo]="!professor.ativo">
+                    {{ professor.ativo ? 'Ativo' : 'Inativo' }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="acoes-tabela">
+                    <button
+                      type="button"
+                      class="btn-editar"
+                      (click)="editarProfessor(professor)">
+                      Editar
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn-excluir"
+                      (click)="excluirProfessor(professor)">
+                      Excluir
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    }
+
+  </section>
+
+</div>

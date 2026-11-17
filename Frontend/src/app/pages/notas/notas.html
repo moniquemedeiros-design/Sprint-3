@@ -1,0 +1,273 @@
+
+<div class="notas-container">
+
+  <div class="pagina-cabecalho">
+    <div>
+      <span class="subtitulo">GESTÃO ACADÊMICA</span>
+      <h1>Notas</h1>
+      <p>Gerencie as avaliações e acompanhe o desempenho dos alunos.</p>
+    </div>
+  </div>
+
+  <!-- Indicadores -->
+  <div class="indicadores">
+
+    <div class="indicador-card">
+      <div class="indicador-icone">📋</div>
+      <div>
+        <span>Total de notas</span>
+        <strong>{{ totalNotas }}</strong>
+      </div>
+    </div>
+
+    <div class="indicador-card">
+      <div class="indicador-icone">📊</div>
+      <div>
+        <span>Média geral</span>
+        <strong>{{ mediaGeral | number:'1.1-2' }}</strong>
+      </div>
+    </div>
+
+    <div class="indicador-card">
+      <div class="indicador-icone">🎓</div>
+      <div>
+        <span>Escala de avaliação</span>
+        <strong>0 a 10</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Mensagens -->
+  <div class="mensagem erro" *ngIf="mensagemErro">
+    {{ mensagemErro }}
+  </div>
+
+  <div class="mensagem sucesso" *ngIf="mensagemSucesso">
+    {{ mensagemSucesso }}
+  </div>
+
+  <!-- Cadastro -->
+  <section class="painel">
+
+    <div class="painel-cabecalho">
+      <div>
+        <h2>{{ notaEmEdicao !== null ? 'Editar nota' : 'Cadastrar nota' }}</h2>
+        <p>Preencha as informações da avaliação.</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="salvar()" #formNota="ngForm">
+
+      <div class="form-grid">
+
+        <div class="campo">
+          <label for="matriculaId">ID da matrícula *</label>
+          <input
+            type="number"
+            id="matriculaId"
+            name="matriculaId"
+            [(ngModel)]="notaForm.matriculaId"
+            min="1"
+            required
+            placeholder="Ex.: 1">
+        </div>
+
+        <div class="campo">
+          <label for="valor">Valor da nota *</label>
+          <input
+            type="number"
+            id="valor"
+            name="valor"
+            [(ngModel)]="notaForm.valor"
+            min="0"
+            max="10"
+            step="0.1"
+            required
+            placeholder="Ex.: 8.5">
+        </div>
+
+        <div class="campo">
+          <label for="descricao">Descrição da avaliação</label>
+          <input
+            type="text"
+            id="descricao"
+            name="descricao"
+            [(ngModel)]="notaForm.descricao"
+            maxlength="100"
+            placeholder="Ex.: Prova 1, Trabalho...">
+        </div>
+
+        <div class="campo">
+          <label for="dataLancamento">Data de lançamento *</label>
+          <input
+            type="date"
+            id="dataLancamento"
+            name="dataLancamento"
+            [(ngModel)]="notaForm.dataLancamento"
+            required>
+        </div>
+
+      </div>
+
+      <div class="acoes-formulario">
+
+        <button type="submit" class="btn-principal">
+          {{ notaEmEdicao !== null ? 'Salvar alterações' : 'Cadastrar nota' }}
+        </button>
+
+        <button
+          type="button"
+          class="btn-secundario"
+          *ngIf="notaEmEdicao !== null"
+          (click)="cancelarEdicao()">
+          Cancelar
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+  <!-- Consulta de média -->
+  <section class="painel consulta-painel">
+
+    <div class="painel-cabecalho">
+      <div>
+        <h2>Consultar desempenho</h2>
+        <p>Calcule a média das notas de uma matrícula.</p>
+      </div>
+    </div>
+
+    <div class="consulta-conteudo">
+
+      <div class="campo">
+        <label for="matriculaConsulta">ID da matrícula</label>
+        <input
+          type="number"
+          id="matriculaConsulta"
+          name="matriculaConsulta"
+          [(ngModel)]="matriculaConsulta"
+          min="1"
+          placeholder="Informe o ID da matrícula">
+      </div>
+
+      <button
+        type="button"
+        class="btn-principal"
+        (click)="calcularMedia()">
+        Calcular média
+      </button>
+
+    </div>
+
+    <div class="resultado-media" *ngIf="mediaCalculada !== null">
+
+      <div>
+        <span>Média calculada</span>
+        <strong>{{ mediaCalculada | number:'1.1-2' }}</strong>
+      </div>
+
+      <div>
+        <span>Situação</span>
+        <strong
+          [class.aprovado]="situacaoCalculada === 'Aprovado'"
+          [class.recuperacao]="situacaoCalculada !== 'Aprovado'">
+          {{ situacaoCalculada }}
+        </strong>
+      </div>
+
+    </div>
+
+    <p class="observacao">
+      * A regra de situação exibida nesta versão é uma simulação local.
+      Ela será ajustada conforme as regras do Back-end.
+    </p>
+
+  </section>
+
+  <!-- Listagem -->
+  <section class="painel">
+
+    <div class="painel-cabecalho listagem-cabecalho">
+      <div>
+        <h2>Notas cadastradas</h2>
+        <p>Consulte, edite ou exclua os registros.</p>
+      </div>
+
+      <div class="campo busca">
+        <input
+          type="text"
+          name="termoBusca"
+          [(ngModel)]="termoBusca"
+          placeholder="Pesquisar notas...">
+      </div>
+    </div>
+
+    <div class="tabela-container">
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Matrícula</th>
+            <th>Descrição</th>
+            <th>Nota</th>
+            <th>Data de lançamento</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let nota of notasFiltradas">
+
+            <td>#{{ nota.id }}</td>
+
+            <td>{{ nota.matriculaId }}</td>
+
+            <td>{{ nota.descricao || 'Não informado' }}</td>
+
+            <td>
+              <span class="nota-valor">
+                {{ nota.valor | number:'1.1-2' }}
+              </span>
+            </td>
+
+            <td>{{ nota.dataLancamento | date:'dd/MM/yyyy' }}</td>
+
+            <td class="acoes-tabela">
+
+              <button
+                type="button"
+                class="btn-editar"
+                (click)="editarNota(nota)">
+                Editar
+              </button>
+
+              <button
+                type="button"
+                class="btn-excluir"
+                (click)="excluirNota(nota)">
+                Excluir
+              </button>
+
+            </td>
+
+          </tr>
+
+          <tr *ngIf="notasFiltradas.length === 0">
+            <td colspan="6" class="vazio">
+              Nenhuma nota cadastrada ou encontrada.
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </section>
+
+</div>

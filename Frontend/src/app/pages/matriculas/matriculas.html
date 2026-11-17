@@ -1,0 +1,234 @@
+
+<div class="pagina-matriculas">
+
+  <div class="titulo-pagina">
+    <div>
+      <span class="subtitulo">GESTÃO ACADÊMICA</span>
+      <h1>Matrículas</h1>
+      <p>Gerencie e acompanhe as matrículas dos alunos.</p>
+    </div>
+
+    <div class="contador">
+      <span>Total de matrículas</span>
+      <strong>{{ matriculas.length }}</strong>
+    </div>
+  </div>
+
+  <div class="indicadores">
+
+    <div class="indicador">
+      <span>Total cadastradas</span>
+      <strong>{{ matriculas.length }}</strong>
+    </div>
+
+    <div class="indicador">
+      <span>Matrículas ativas</span>
+      <strong>{{ totalAtivas }}</strong>
+    </div>
+
+    <div class="indicador">
+      <span>Matrículas inativas</span>
+      <strong>{{ totalInativas }}</strong>
+    </div>
+
+  </div>
+
+  @if (mensagemErro) {
+    <div class="alerta erro">
+      {{ mensagemErro }}
+    </div>
+  }
+
+  @if (mensagemSucesso) {
+    <div class="alerta sucesso">
+      {{ mensagemSucesso }}
+    </div>
+  }
+
+  <section class="card-formulario">
+
+    <div class="cabecalho-card">
+      <div>
+        <h2>
+          {{ matriculaEmEdicao !== null ? 'Editar matrícula' : 'Cadastrar matrícula' }}
+        </h2>
+        <p>Preencha os dados para registrar uma matrícula.</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="salvar()">
+
+      <div class="linha-campos">
+
+        <div class="campo">
+          <label for="alunoId">ID do aluno *</label>
+          <input
+            id="alunoId"
+            type="number"
+            name="alunoId"
+            [(ngModel)]="matriculaForm.alunoId"
+            min="1"
+            placeholder="Informe o ID do aluno"
+            required
+          >
+          <small>Posteriormente será possível selecionar pelo nome.</small>
+        </div>
+
+        <div class="campo">
+          <label for="turmaId">ID da turma *</label>
+          <input
+            id="turmaId"
+            type="number"
+            name="turmaId"
+            [(ngModel)]="matriculaForm.turmaId"
+            min="1"
+            placeholder="Informe o ID da turma"
+            required
+          >
+          <small>Posteriormente será possível selecionar pelo nome.</small>
+        </div>
+
+      </div>
+
+      <div class="linha-campos">
+
+        <div class="campo">
+          <label for="dataMatricula">Data da matrícula *</label>
+          <input
+            id="dataMatricula"
+            type="date"
+            name="dataMatricula"
+            [(ngModel)]="matriculaForm.dataMatricula"
+            required
+          >
+        </div>
+
+        <div class="campo">
+          <label for="ativa">Situação da matrícula</label>
+          <select
+            id="ativa"
+            name="ativa"
+            [(ngModel)]="matriculaForm.ativa"
+          >
+            <option [ngValue]="true">Ativa</option>
+            <option [ngValue]="false">Inativa</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="acoes-formulario">
+
+        <button type="submit" class="botao-principal">
+          {{ matriculaEmEdicao !== null ? 'Salvar alterações' : 'Cadastrar matrícula' }}
+        </button>
+
+        @if (matriculaEmEdicao !== null) {
+          <button
+            type="button"
+            class="botao-secundario"
+            (click)="cancelarEdicao()"
+          >
+            Cancelar
+          </button>
+        }
+
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card-listagem">
+
+    <div class="cabecalho-listagem">
+      <div>
+        <h2>Matrículas cadastradas</h2>
+        <p>Consulte, edite ou exclua as matrículas.</p>
+      </div>
+
+      <input
+        type="search"
+        class="campo-busca"
+        name="termoBusca"
+        [(ngModel)]="termoBusca"
+        placeholder="Pesquisar matrícula..."
+      >
+    </div>
+
+    @if (matriculasFiltradas.length === 0) {
+
+      <div class="estado-vazio">
+        <span class="icone-vazio">📚</span>
+        <strong>Nenhuma matrícula encontrada</strong>
+        <p>Cadastre uma matrícula ou altere sua pesquisa.</p>
+      </div>
+
+    } @else {
+
+      <div class="tabela-responsiva">
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Aluno</th>
+              <th>Turma</th>
+              <th>Data da matrícula</th>
+              <th>Situação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (matricula of matriculasFiltradas; track matricula.id) {
+              <tr>
+
+                <td>{{ matricula.id }}</td>
+                <td>Aluno #{{ matricula.alunoId }}</td>
+                <td>Turma #{{ matricula.turmaId }}</td>
+
+                <td>
+                  {{ matricula.dataMatricula | date:'dd/MM/yyyy' }}
+                </td>
+
+                <td>
+                  <span
+                    class="situacao"
+                    [class.ativa]="matricula.ativa"
+                    [class.inativa]="!matricula.ativa"
+                  >
+                    {{ matricula.ativa ? 'Ativa' : 'Inativa' }}
+                  </span>
+                </td>
+
+                <td class="acoes-tabela">
+
+                  <button
+                    type="button"
+                    class="botao-editar"
+                    (click)="editarMatricula(matricula)"
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="botao-excluir"
+                    (click)="excluirMatricula(matricula)"
+                  >
+                    Excluir
+                  </button>
+
+                </td>
+
+              </tr>
+            }
+          </tbody>
+        </table>
+
+      </div>
+    }
+
+  </section>
+
+</div>
